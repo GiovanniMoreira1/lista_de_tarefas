@@ -7,7 +7,7 @@ ERROS criar(Tarefa tarefas[], int *pos){
         return MAX_TAREFA;
 
     do {
-  printf("Entre com a prioridade (1 - 10): ");
+  printf("Entre com a prioridade |1 - 10|: ");
   scanf("%d", &tarefas[*pos].prioridade);
   } while (tarefas[*pos].prioridade > 10 || tarefas[*pos].prioridade < 1);
   
