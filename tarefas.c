@@ -97,6 +97,33 @@ ERROS carregar(Tarefa tarefas[], int *pos){
 
 }
 
+ERROS exportar(Tarefa tarefas[], int *pos){
+    if(*pos == 0)
+        return SEM_TAREFAS;
+
+    FILE *arq;
+    char arqName[25];
+    printf("Digite o nome do arquivo:");
+    scanf("%s", arqName);
+    clearBuffer();
+
+    arq = fopen(arqName, "wt");  // Cria um arquivo texto para gravação
+    if (arq == NULL) // Se não conseguiu criar
+    {
+        return CRIAR;
+    }
+
+    for(int i=0; i<*pos; i++){
+        int result = fprintf(arq, "Pos: %d\tPrioridade: %d\tCategoria: %s\tDescricao: %s\n", i+1, tarefas[i].prioridade, tarefas[i].categoria, tarefas[i].descricao);
+        if(result == EOF){
+            return ESCREVER;
+        }
+    }
+    fclose(arq);
+
+    return OK;
+}
+
 void clearBuffer(){
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
