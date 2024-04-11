@@ -20,6 +20,7 @@ int main(){
         printf("Escolha uma opcao: ");
 
         scanf("%d", &opcao);
+        clearBuffer();
         opcao--;
         if(opcao > 2)
             printf("Opcao invalida\n");
