@@ -29,6 +29,7 @@ int main(){
         printf("Escolha uma opcao: ");
 
         scanf("%d", &opcao);
+        clearBuffer();
 
         opcao--;
         if(opcao > 3)
@@ -55,6 +56,10 @@ int main(){
             } else if (ERRO == CATEGORIA) {
                 printf("ERRO - Categoria não encontrada.\n");
             }
+            } else if (ERRO == OK) {
+            } else {
+        }
+
     }
     else
         printf("Sair...\n");
