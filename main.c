@@ -56,9 +56,8 @@ int main(){
             } else if (ERRO == CATEGORIA) {
                 printf("ERRO - Categoria não encontrada.\n");
             }
-            } else if (ERRO == OK) {
-            } else {
-        }
+          
+        
 
     }
     else
