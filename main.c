@@ -25,7 +25,7 @@ int main(){
         if(opcao > 2)
             printf("Opcao invalida\n");
         else if(opcao >= 0){
-            int ERRO = fs[opcao](tarefas, &pos);
+            ERROS ERRO = fs[opcao](tarefas, &pos);
     
             if (ERRO == MAX_TAREFA) {
                 printf("ERRO - Máximo de tarefas atingido.\n");
