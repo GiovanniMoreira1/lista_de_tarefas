@@ -8,7 +8,7 @@ typedef struct {
     char categoria[T_CATEGORIA];
 } Tarefa;
 
-typedef enum {OK, MAX_TAREFA, SEM_TAREFAS, NAO_ENCONTRADO, ABRIR, FECHAR, ESCREVER, LER, CRIAR} ERROS;
+typedef enum {OK, MAX_TAREFA, SEM_TAREFAS, NAO_ENCONTRADO, ABRIR, FECHAR, ESCREVER, LER, CRIAR, CATEGORIA} ERROS;
 
 typedef ERROS (*funcao)(Tarefa[], int*);
 

@@ -63,6 +63,57 @@ ERROS listar(Tarefa tarefas[], int *pos){
     return OK;
 }
 
+ERROS exportar(Tarefa tarefas[], int *pos){
+    if(*pos == 0)
+        return SEM_TAREFAS;
+
+    FILE *arq;
+    char arqName[25];
+    printf("Digite o nome do arquivo: "); // Pede o nome do arquivo a ser criado para o usuário
+    scanf("%s", arqName);
+    clearBuffer();
+
+    arq = fopen(arqName, "wt");  // Cria um arquivo texto para gravação
+    if (arq == NULL) // Se não conseguiu criar
+    {
+        return CRIAR;
+    }
+    // Busca de Categoria
+    char categoria[T_CATEGORIA];
+    printf("Digite a categoria: ");
+    fgets(categoria, T_CATEGORIA, stdin);
+    categoria[strcspn(categoria, "\n")] = '\0';
+
+    if(categoria[0] == '\0'){
+        for(int i=0; i<*pos; i++){
+            int result = fprintf(arq, "Pos: %d\tPrioridade: %d\tCategoria: %s\tDescricao: %s\n", i+1, tarefas[i].prioridade, tarefas[i].categoria, tarefas[i].descricao);
+            if(result == EOF){
+                return ESCREVER;
+            }
+        }
+    }else {
+        int contCategoria = 0;
+        for(int i=0; i<*pos; i++){
+            if(strcmp(tarefas[i].categoria, categoria) == 0){
+                contCategoria+=1;
+                int result = fprintf(arq, "Pos: %d\tPrioridade: %d\tCategoria: %s\tDescricao: %s\n", i+1, tarefas[i].prioridade, tarefas[i].categoria, tarefas[i].descricao);
+                if(result == EOF){
+                    return ESCREVER;
+                }
+            }
+        }
+        if(contCategoria == 0){
+            fclose(arq);
+            return CATEGORIA;
+        }
+    };
+
+
+    fclose(arq);
+
+    return OK;
+}
+
 ERROS salvar(Tarefa tarefas[], int *pos){
     FILE *f = fopen("tarefas.bin", "wb");
     if(f == NULL)
@@ -100,33 +151,6 @@ ERROS carregar(Tarefa tarefas[], int *pos){
 
     return OK;
 
-}
-
-ERROS exportar(Tarefa tarefas[], int *pos){
-    if(*pos == 0)
-        return SEM_TAREFAS;
-
-    FILE *arq;
-    char arqName[25];
-    printf("Digite o nome do arquivo:");
-    scanf("%s", arqName);
-    clearBuffer();
-
-    arq = fopen(arqName, "wt");  // Cria um arquivo texto para gravação
-    if (arq == NULL) // Se não conseguiu criar
-    {
-        return CRIAR;
-    }
-
-    for(int i=0; i<*pos; i++){
-        int result = fprintf(arq, "Pos: %d\tPrioridade: %d\tCategoria: %s\tDescricao: %s\n", i+1, tarefas[i].prioridade, tarefas[i].categoria, tarefas[i].descricao);
-        if(result == EOF){
-            return ESCREVER;
-        }
-    }
-    fclose(arq);
-
-    return OK;
 }
 
 void clearBuffer(){
