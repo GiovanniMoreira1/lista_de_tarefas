@@ -2,13 +2,21 @@
 #include "tarefas.h"
 
 int main(){
-    funcao fs[] = {criar, deletar, listar, salvar, carregar};
+    funcao fs[] = {criar, deletar, listar, exportar, salvar, carregar};
 
     Tarefa tarefas[TOTAL];
     int pos;
-    ERROS erro = fs[4](tarefas, &pos);
-    if(erro != OK)
+    ERROS erro = fs[5](tarefas, &pos);
+    if(erro != OK){
         pos = 0;
+        if (erro == ABRIR) {
+            printf("ERRO - Não foi possível abrir o arquivo.\n");
+        } else if (erro == FECHAR) {
+            printf("ERRO - Não foi possível fechar o arquivo.\n");
+        } else if (erro == LER) {
+            printf("ERRO - Não foi possível ler o  arquivo.\n");
+        }
+    }
 
     int opcao;
     do{
@@ -16,6 +24,7 @@ int main(){
         printf("1 - Criar tarefa\n");
         printf("2 - Deletar tarefa\n");
         printf("3 - Listar tarefas\n");
+        printf("4 - Exportar tarefas\n");
         printf("0 - Sair\n");
         printf("Escolha uma opcao: ");
 
@@ -23,7 +32,7 @@ int main(){
         clearBuffer();
 
         opcao--;
-        if(opcao > 2)
+        if(opcao > 3)
             printf("Opcao invalida\n");
         else if(opcao >= 0){
             ERROS ERRO = fs[opcao](tarefas, &pos);
@@ -44,14 +53,17 @@ int main(){
                 printf("ERRO - Não foi possível escrever em seu arquivo.\n");
             } else if (ERRO == LER) {
                 printf("ERRO - Não foi possível ler o seu arquivo.\n");
-            } else if (ERRO == OK) {
-            } else {
-        }
+            } else if (ERRO == CATEGORIA) {
+                printf("ERRO - Categoria não encontrada.\n");
+            }
+          
+        
+
     }
     else
         printf("Sair...\n");
 
     } while(opcao >= 0);
 
-    fs[3](tarefas, &pos);
+    fs[4](tarefas, &pos);
 }
